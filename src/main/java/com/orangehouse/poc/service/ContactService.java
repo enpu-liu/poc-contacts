@@ -15,8 +15,6 @@ import java.util.Optional;
 @Service
 public class ContactService
 {
-    final private Logger logger = LoggerFactory.getLogger(this.getClass());
-
     @Autowired
     private ContactRepo contactRepo;
 

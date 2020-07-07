@@ -23,7 +23,8 @@ import static org.mockito.Mockito.when;
 @RunWith(SpringRunner.class)
 public class AvatarServiceTest
 {
-    final private Logger logger = LoggerFactory.getLogger(this.getClass());
+    final private Logger logger =
+            LoggerFactory.getLogger(AvatarServiceTest.class);
 
     @TestConfiguration
     static class AvatarServiceTestContextConfiguration

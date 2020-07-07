@@ -30,8 +30,8 @@ public class SwaggerConfig
     {
         return new ApiInfoBuilder()
                 .title("POC Contact")
-                .description("POC of Spring Boot RESTful API")
-                .version("1.0")
+                .description("Practise of Spring Boot RESTful API")
+                .version("1.0.0")
                 .build();
     }
 }

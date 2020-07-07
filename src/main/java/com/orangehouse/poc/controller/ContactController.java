@@ -6,6 +6,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1/contacts")
 public class ContactController
 {
+    final private Logger logger =
+            LoggerFactory.getLogger(ContactController.class);
+
     @Autowired
     private ContactService contactService;
 
@@ -48,6 +53,7 @@ public class ContactController
             return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception ex)
         {
+            logger.error(">>>>>>>> error=[" + ex.getMessage() + "] <<<<<<<<");
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
@@ -82,8 +88,11 @@ public class ContactController
     {
         if (contactService
                 .contactEmailExists(contact.getId(), contact.getEmail()))
+        {
+            logger.error(">>>>>>>> email exists: " + contact.getEmail() +
+                    " <<<<<<<<");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        else
+        } else
         {
             try
             {
@@ -94,6 +103,8 @@ public class ContactController
                 return new ResponseEntity<>(data, HttpStatus.OK);
             } catch (Exception ex)
             {
+                logger.error(
+                        ">>>>>>>> error=[" + ex.getMessage() + "] <<<<<<<<");
                 return new ResponseEntity<>(null,
                         HttpStatus.EXPECTATION_FAILED);
             }
@@ -113,8 +124,11 @@ public class ContactController
         if (!existing.isPresent())
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         else if (contactService.contactEmailExists(id, contact.getEmail()))
+        {
+            logger.error(">>>>>>>> email exists: " + contact.getEmail() +
+                    " <<<<<<<<");
             return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-        else
+        } else
         {
             Contact update = existing.get();
             update.setFirstName(contact.getFirstName());
@@ -142,6 +156,7 @@ public class ContactController
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (Exception ex)
         {
+            logger.error(">>>>>>>> error=[" + ex.getMessage() + "] <<<<<<<<");
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }

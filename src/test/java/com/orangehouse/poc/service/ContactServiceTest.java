@@ -58,7 +58,8 @@ public class ContactServiceTest
     public void should_find_all_contacts()
     {
         Pageable pageable = PageRequest.of(0, 10);
-        when(contactRepo.findAll(any(PageRequest.class))).thenReturn(pageContacts);
+        when(contactRepo.findAll(any(PageRequest.class)))
+                .thenReturn(pageContacts);
 
         Page<Contact> page = contactService.findAll(pageable);
         assertThat(page).isEqualTo(pageContacts);

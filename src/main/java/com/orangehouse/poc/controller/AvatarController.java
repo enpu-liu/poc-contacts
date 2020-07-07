@@ -7,6 +7,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +26,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1/avatar")
 public class AvatarController
 {
+    final private Logger logger =
+            LoggerFactory.getLogger(AvatarController.class);
+
     @Autowired
     private AvatarService avatarService;
     @Autowired
@@ -41,9 +46,13 @@ public class AvatarController
             if (avatarService.saveById(id, avatarFile).isPresent())
                 return new ResponseEntity<>(HttpStatus.OK);
             else
+            {
+                logger.error(">>>>>>>> avatar save failed. <<<<<<<<");
                 return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+            }
         } catch (Exception ex)
         {
+            logger.error(">>>>>>>> error=[" + ex.getMessage() + "] <<<<<<<<");
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
@@ -79,6 +88,7 @@ public class AvatarController
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception ex)
         {
+            logger.error(">>>>>>>> error=[" + ex.getMessage() + "] <<<<<<<<");
             return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }

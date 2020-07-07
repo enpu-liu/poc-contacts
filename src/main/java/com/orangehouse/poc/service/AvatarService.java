@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class AvatarService
 {
-    final private Logger logger = LoggerFactory.getLogger(this.getClass());
+    final private Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Autowired
     private ContactRepo contactRepo;
